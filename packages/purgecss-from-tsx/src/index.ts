@@ -19,6 +19,7 @@ function purgeFromTsx(options?: {
       ts.transpileModule(content, {
         compilerOptions: {
           jsx: ts.JsxEmit.Preserve,
+          module: ts.ModuleKind.CommonJS,
           ...options?.tsOptions,
         },
       }).outputText,

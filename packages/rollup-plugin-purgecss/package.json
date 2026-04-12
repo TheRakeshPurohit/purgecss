@@ -32,7 +32,7 @@
   "homepage": "https://purgecss.com",
   "dependencies": {
     "purgecss": "^5.0.0",
-    "rollup-pluginutils": "^2.8.0"
+    "rollup-pluginutils": "^2.8.2"
   },
   "publishConfig": {
     "access": "public",

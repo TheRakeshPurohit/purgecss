@@ -5,6 +5,7 @@
     "target": "es2019",
     "module": "esnext",
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "strict": true,
     "allowJs": false,
     "noUnusedLocals": true,
