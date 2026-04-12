@@ -98,9 +98,11 @@ export async function setOptions(
         : importedConfig;
   } catch (err: unknown) {
     if (err instanceof Error) {
-      throw new Error(`${ERROR_CONFIG_FILE_LOADING} ${err.message}`);
+      throw new Error(`${ERROR_CONFIG_FILE_LOADING} ${err.message}`, {
+        cause: err,
+      });
     }
-    throw new Error();
+    throw new Error(undefined, { cause: err });
   }
   return {
     ...defaultOptions,
