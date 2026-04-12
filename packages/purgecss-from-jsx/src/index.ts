@@ -36,7 +36,11 @@ function purgeFromJsx(options?: acorn.Options) {
       ).parse(content, options || { ecmaVersion: "latest" }),
       state,
       {
-        JSXOpeningElement(acornNode, state, callback) {
+        JSXOpeningElement(
+          acornNode: acorn.Node,
+          state: NodeState,
+          callback: (node: acorn.Node, state: NodeState) => void,
+        ) {
           const node = acornNode as JSXOpeningElement;
           const nameState: NodeState = {};
 
@@ -49,7 +53,11 @@ function purgeFromJsx(options?: acorn.Options) {
             callback(node.attributes[i], state);
           }
         },
-        JSXAttribute(acornNode, state, callback) {
+        JSXAttribute(
+          acornNode: acorn.Node,
+          state: NodeState,
+          callback: (node: acorn.Node, state: NodeState) => void,
+        ) {
           const node = acornNode as JSXAttribute;
 
           if (!node.value) {
@@ -78,22 +86,22 @@ function purgeFromJsx(options?: acorn.Options) {
               break;
           }
         },
-        JSXIdentifier(acornNode, state) {
+        JSXIdentifier(acornNode: acorn.Node, state: NodeState) {
           const node = acornNode as JSXIdentifier;
           state.text = node.name;
         },
-        JSXNamespacedName(acornNode, state) {
+        JSXNamespacedName(acornNode: acorn.Node, state: NodeState) {
           const node = acornNode as JSXNamespacedName;
           state.text = node.namespace.name + ":" + node.name.name;
         },
         // Only handle Literal for now, not JSXExpressionContainer | JSXElement
-        Literal(acornNode, state) {
+        Literal(acornNode: acorn.Node, state: NodeState) {
           const node = acornNode as Literal;
           if (typeof node.value === "string") {
             state.text = node.value;
           }
         },
-      },
+      } as unknown as walk.RecursiveVisitors<NodeState>,
       { ...walk.base },
     );
 
